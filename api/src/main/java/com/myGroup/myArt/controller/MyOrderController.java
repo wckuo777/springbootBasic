@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import com.myGroup.myArt.dto.OrderDTO;
+import com.myGroup.myArt.dto.PriceQueryDTO;
 import com.myGroup.myArt.model.MyOrder;
 import com.myGroup.myArt.service.MyOrderService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 
 @RestController
@@ -71,4 +71,17 @@ public class MyOrderController {
         List<OrderDTO> dtos = service.getAllOrdersForYou();
         return ResponseEntity.ok(dtos);
     }
+    
+   
+
+    @PostMapping("/price/query")
+    @Operation(
+        summary = "依價格條件查詢訂單",
+        description = "可依照 GREATER / LESS / EQUAL / BETWEEN 查詢符合條件的訂單"
+    )
+    public List<OrderDTO> queryByPrice(@RequestBody PriceQueryDTO dto) {
+        return service.queryOrdersByPrice(dto);
+    }
+
+    
 }

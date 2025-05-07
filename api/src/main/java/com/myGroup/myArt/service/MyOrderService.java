@@ -1,6 +1,8 @@
 package com.myGroup.myArt.service;
 
 import com.myGroup.myArt.dto.OrderDTO;
+import com.myGroup.myArt.dto.PriceQueryDTO;
+import com.myGroup.myArt.enums.PriceQueryType;
 import com.myGroup.myArt.model.MyCustomer;
 import com.myGroup.myArt.model.MyOrder;
 import com.myGroup.myArt.repository.MyCustomerRepository;
@@ -13,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MyOrderService {
@@ -82,5 +85,51 @@ public class MyOrderService {
         
         return dtos;
     }
+    
+    public List<OrderDTO> queryOrdersByPrice(PriceQueryDTO dto) {
+        PriceQueryType type = dto.getType();
+        Long price = dto.getPrice();
+        Long maxPrice = dto.getMaxPrice();
+
+        List<MyOrder> orders;
+
+        switch (type) {
+            case GREATER:
+                orders = repository.findByPriceGreaterThan(price);
+                break;
+            case LESS:
+                orders = repository.findByPriceLessThan(price);
+                break;
+            case EQUAL:
+                orders = repository.findByPrice(price);
+                break;
+            case BETWEEN:
+                if (price != null && maxPrice != null) {
+                    orders = repository.findByPriceBetween(price, maxPrice);
+                    break;
+                }
+                throw new IllegalArgumentException("BETWEEN 查詢需要 price 和 maxPrice");
+            default:
+                throw new IllegalArgumentException("未知查詢類型: " + type);
+        }
+
+        return orders.stream()
+                     .map(this::toDto)
+                     .collect(Collectors.toList());
+    }
+
+    private OrderDTO toDto(MyOrder order) {
+        OrderDTO dto = new OrderDTO();
+        dto.setId(order.getId());
+        dto.setName(order.getName());
+        dto.setAge(order.getCustomer().getAge());
+        dto.setAddress(order.getAddress());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dto.setDuedate(sdf.format(order.getDuedate()));
+
+        return dto;
+    }
+
 	
 }
