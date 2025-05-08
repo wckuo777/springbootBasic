@@ -53,10 +53,19 @@ spring.datasource.password=your_password
 ```
 run as > Spring boot App
 ```
+![Eclipse 執行 Spring Boot](jpg_md/eclipse_run_spring_boot_app.jpg)
 
 🔍 Swagger 文件
 啟動後可透過瀏覽器開啟 API 文件：
 http://localhost:8080/swagger-ui/index.html
+
+測試圖:
+
+![Swagger 畫面 1](jpg_md/swagger1.jpg)
+
+![Swagger 畫面 2](jpg_md/swagger2.jpg)
+
+![Swagger 畫面 3](jpg_md/swagger3.jpg)
 
 
 
