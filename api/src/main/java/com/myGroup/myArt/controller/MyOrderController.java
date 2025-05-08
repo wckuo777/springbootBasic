@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import com.myGroup.myArt.dto.OrderDTO;
+import com.myGroup.myArt.dto.OrderDetailDTO;
 import com.myGroup.myArt.dto.PriceQueryDTO;
 import com.myGroup.myArt.model.MyOrder;
 import com.myGroup.myArt.service.MyOrderService;

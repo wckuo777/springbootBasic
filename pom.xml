@@ -6,6 +6,15 @@
 	<artifactId>myArt</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
 	<name>myArt</name>
 	<description>Demo project for Spring Boot</description>
+	<modules>
+      <module>api</module>
+      <module>web</module>
+    </modules>
+	<properties>
+      <java.version>1.8</java.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>
